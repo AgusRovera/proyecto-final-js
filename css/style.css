@@ -1,0 +1,173 @@
+/* Import the DM Sans font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&display=swap');
+
+/* Reset some default styles for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+}
+
+/* Style the header element */
+header {
+    width: 100%;
+    padding: 1rem;
+    background-color:rgba(140, 140, 140, 0.235);
+    display: grid;
+    grid-template-rows: 6rem;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "tit form";
+}
+
+/* Style the elements in the form section of the header */
+.inUsuario,
+.inPass,
+.check,
+.btn-login {
+    grid-area: form;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: .19rem;
+    grid-template-areas:
+        "usuario contraseña"
+        "check submit";
+}
+
+/* Style the #register element */
+#register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(140, 140, 140, 0.235);
+}
+
+/* Style the input fields */
+.inputR {
+    padding: 10px 10px;
+    width: 15rem;
+    color: #666;
+    border-radius: 1px;
+    border: 1px solid #ccc;
+}
+
+/* Style the login and reset buttons */
+.lgbtn[type="submit"],
+.lgbtn[type="reset"] {
+    width: 15rem;
+    padding: 8px 13px;
+    margin: 10px 0px;
+    color: white;
+    border-radius: 3px;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Style the reset button hover effect */
+button[type="reset"]:hover {
+    background-color: #ff1814;
+}
+
+/* Style the h1 element */
+h1 {
+    grid-area: tit;
+    margin: 1rem;
+    size: 10rem;
+    color: rgb(13, 44, 22);
+}
+
+/* Style the checkbox element */
+.check {
+    grid-area: check;
+    align-items: end;
+    margin-right: .3rem;
+}
+
+/* Style the div element */
+div {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+/* Style the .contIng element */
+.contIng {
+    border: 1px solid black;
+    border-radius: 5%;
+    padding: .8rem;
+    margin: 1rem;
+    background-color: rgba(140, 140, 140, 0.235);
+}
+
+/* Style the .boton element */
+.boton {
+    padding: 8px;
+    margin: .6rem;
+    font-size: .925rem;
+    background-color: #eaff6a;
+    width: 200px;
+    box-shadow: 5px 8px 10px -1px rgba(183, 15, 255, 0.406);
+    width: fit-content;
+    height: 2rem;
+    border: 1px solid black;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+/* Style the .boton hover effect */
+.boton:hover {
+    background-color: #84ff0068;
+}
+
+/* Style the .contFiltrado element */
+.contFiltrado {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0.3125rem 0.5rem 0.625rem 0.0625rem #666;
+    background-color: rgba(140, 140, 140, 0.235);
+}
+
+/* Style the .card element */
+.card {
+    background-color: #eaff6a;
+    width: 12.5rem;
+    border-radius: 1.25rem;
+    box-shadow: 0.3125rem 0.5rem 0.625rem 0.0625rem rgba(183, 15, 255, 0.552);
+}
+
+/* Style the input and select elements */
+input,
+select {
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Style the select element */
+select {
+    background-color: transparent;
+    font-size: 10px;
+    height: 24px;
+    width: 70px;
+}
+
+/* Style the li element */
+li {
+    list-style-type: none;
+    margin: 1rem;
+}
+
+/* Style the .btnComprar and .btnFiltrado buttons */
+.btnComprar,
+.btnFiltrado {
+    box-shadow: 3px 4px 2px -2px;
+}
