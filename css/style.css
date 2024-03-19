@@ -1,173 +1,236 @@
-/* Import the DM Sans font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&display=swap");
 
-/* Reset some default styles for all elements */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'DM Sans', sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-weight: 400;
 }
 
-/* Style the header element */
+body {
+    min-width: 100%;
+    background-image: url(../img/globo.jpg);
+}
+
+.wrapper {
+    padding: 1.5rem;
+}
+
 header {
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 1rem;
-    background-color:rgba(140, 140, 140, 0.235);
-    display: grid;
-    grid-template-rows: 6rem;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-        "tit form";
+    background-image: url(../img/globo.jpg);
+    background-position: left;
 }
 
-/* Style the elements in the form section of the header */
-.inUsuario,
-.inPass,
-.check,
-.btn-login {
-    grid-area: form;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
-    gap: .19rem;
-    grid-template-areas:
-        "usuario contraseña"
-        "check submit";
+h1 {
+    width: 50%;
+    margin-top: 100px;
+    width: 100%;
+    padding: 10px 0;
 }
 
-/* Style the #register element */
-#register {
+h1 span {
+    width: 50%;
+    margin-left: 10px;
+    font-size: 3rem;
+    background-color: #0000002d;
+    color: #fff;
+    padding: 0 0.4rem;
+    font-style: italic;
+    font-weight: bolder;
+}
+
+h2 {
+    color: #fff;
+}
+
+.logo {
+    border-radius: 50%;
+    border-width: 3px;
+    border-style: solid;
+    color: #00000065;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+h2 {
+    margin: 15px 0;
+    margin-left: 3px;
+}
+
+main,
+ul {
+    margin-left: 30px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
+
+/*Estilos formularios*/
+.ingresoform,
+.registro-form {
+    color: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 25px;
+    padding: 20px;
+    width: 45%;
+    height: 400px;
+
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    border: 2px solid rgb(68, 134, 209);
+    border-radius: 5px;
+}
+
+.ingresoform a,
+.registro-form a {
+    display: flex;
+    justify-content: center;
+    height: 30px;
+    border-style: solid;
+    border-width: 1px;
+    color: #fff;
+    background-color: #000;
+}
+
+.label {
+    background-color: #00000024;
+    font-size: large;
+    color: #fff;
+    margin-right: 25px;
+}
+
+.input-buscar {
+    background-color: #ffffffac;
+    margin-right: 25px;
+    height: 35px;
+}
+
+form input {
+    padding: 3px;
+    font-size: 1.025rem;
+}
+
+.contenedor {
+    color: #fff;
+    margin: 1rem;
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.contenedor-pago {
+    background-color: #dbb6b674;
+    border-style: double;
+    color: #fff;
+    width: 50%;
+    height: 30px;
+}
+
+.btn-container {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
     align-items: center;
-    background-color: rgba(140, 140, 140, 0.235);
+    margin-top: 3rem;
 }
 
-/* Style the input fields */
-.inputR {
-    padding: 10px 10px;
-    width: 15rem;
-    color: #666;
-    border-radius: 1px;
-    border: 1px solid #ccc;
-}
-
-/* Style the login and reset buttons */
-.lgbtn[type="submit"],
-.lgbtn[type="reset"] {
-    width: 15rem;
-    padding: 8px 13px;
-    margin: 10px 0px;
-    color: white;
-    border-radius: 3px;
+.btn {
+    width: 100%;
+    height: 45px;
     border: none;
-    font-size: 1.2rem;
+    background-color: transparent;
+    border-radius: 4px;
+    font-size: 1.025rem;
+    text-transform: capitalize;
     cursor: pointer;
 }
 
-/* Style the reset button hover effect */
-button[type="reset"]:hover {
-    background-color: #ff1814;
+.btn-search {
+    background-color: #fff;
+    width: 120px;
 }
 
-/* Style the h1 element */
-h1 {
-    grid-area: tit;
-    margin: 1rem;
-    size: 10rem;
-    color: rgb(13, 44, 22);
+.btn-success {
+    width: 100px;
+    background-color: #1f561f;
+    color: #fff;
+    transition: background-color 0.25s ease-in-out;
 }
 
-/* Style the checkbox element */
-.check {
-    grid-area: check;
-    align-items: end;
-    margin-right: .3rem;
+.btn-success:hover {
+    transition-delay: 0.25s;
+    background-color: #000;
 }
 
-/* Style the div element */
-div {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    display: flex;
+.btn-danger {
+    width: 100px;
+    background-color: #1f561f;
+    color: #fff;
+    transition: background-color 0.25s ease-in-out;
 }
 
-/* Style the .contIng element */
-.contIng {
-    border: 1px solid black;
-    border-radius: 5%;
-    padding: .8rem;
-    margin: 1rem;
-    background-color: rgba(140, 140, 140, 0.235);
+.btn-danger:hover {
+    transition-delay: 0.25s;
+    background-color: #000;
 }
 
-/* Style the .boton element */
-.boton {
-    padding: 8px;
-    margin: .6rem;
-    font-size: .925rem;
-    background-color: #eaff6a;
+.btn-delete {
+    background-color: #ff0000;
+    color: #fff;
+    width: 100px;
+}
+
+.btn-pay {
+    background-color: #fff;
+    width: 130px;
+}
+
+img {
     width: 200px;
-    box-shadow: 5px 8px 10px -1px rgba(183, 15, 255, 0.406);
-    width: fit-content;
-    height: 2rem;
-    border: 1px solid black;
+    height: 200px !important;
+    object-fit: cover;
+}
+
+.card {
+    margin-top: 10px;
+    padding: 1.3rem;
+    width: 280px;
+    height: 400px;
+    color: #000;
+    border: 5px double #000;
     border-radius: 10px;
-    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
-}
-
-/* Style the .boton hover effect */
-.boton:hover {
-    background-color: #84ff0068;
-}
-
-/* Style the .contFiltrado element */
-.contFiltrado {
+    background-color: #bfdc1a89;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 2rem;
-    border: 1px solid black;
-    border-radius: 10px;
-    box-shadow: 0.3125rem 0.5rem 0.625rem 0.0625rem #666;
-    background-color: rgba(140, 140, 140, 0.235);
+    justify-content: space-around;
 }
 
-/* Style the .card element */
-.card {
+.card h3 {
+    text-transform: capitalize;
+}
+
+.card-action {
+    max-width: 100%;
+    background-color: #bad52182;
+}
+
+/*formularios*/
+.box {
     background-color: #eaff6a;
-    width: 12.5rem;
-    border-radius: 1.25rem;
-    box-shadow: 0.3125rem 0.5rem 0.625rem 0.0625rem rgba(183, 15, 255, 0.552);
-}
-
-/* Style the input and select elements */
-input,
-select {
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-/* Style the select element */
-select {
-    background-color: transparent;
-    font-size: 10px;
-    height: 24px;
-    width: 70px;
-}
-
-/* Style the li element */
-li {
-    list-style-type: none;
-    margin: 1rem;
-}
-
-/* Style the .btnComprar and .btnFiltrado buttons */
-.btnComprar,
-.btnFiltrado {
-    box-shadow: 3px 4px 2px -2px;
+    padding: 40px;
+    width: 300px;
+    border-radius: 20px;
+    -webkit-box-shadow: 3px 1px 20px -2px rgba(0, 0, 0, 0.44);
+    -moz-box-shadow: 3px 1px 20px -2px rgba(0, 0, 0, 0.44);
+    box-shadow: 3px 1px 20px -2px rgba(0, 0, 0, 0.44);
 }
