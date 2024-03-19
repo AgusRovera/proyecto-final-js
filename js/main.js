@@ -2,9 +2,9 @@
 const tienda = [
     {
         id: 1,
-        nombre: "computadora de escritorio hp ",
+        nombre: "Volkswagen Polo",
         precio: 10500.0,
-        img: "Compu2.jpeg",
+        img: "polo.png",
     },
     {
         id: 2,
