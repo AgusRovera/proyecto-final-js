@@ -3,21 +3,21 @@ const tienda = [
     {
         id: 1,
         nombre: "Volkswagen Polo",
-        precio: 10500.0,
+        precio: 23000 ,
         img: "polo.png",
     },
     {
         id: 2,
-        nombre: "laptop Dell Inspiron",
-        precio: 12000.0,
-        img: "Dell2.jpeg",
+        nombre: "Volkswagen Virtus",
+        precio: 19000,
+        img: "virtus.png",
     },
-    { id: 3, nombre: "audifonos hp", precio: 800.0, img: "audifonoshp2.jpeg" },
-    { id: 4, nombre: "bocinas usb", precio: 1200.0, img: "bocinas.jpg" },
-    { id: 5, nombre: "motorola g14", precio: 5000, img: "moto-g14.jpg" },
-    { id: 6, nombre: "i-pad pro max", precio: 15000.0, img: "ipad.jpeg" },
-    { id: 7, nombre: "monitor gamer", precio: 6000.0, img: "monitor gamer.jpg" },
-    { id: 8, nombre: "Laptop HP Pavillion", precio: 8000.0, img: "lapHP.jpeg" },
+    { id: 3, nombre: "Volkswagen Vento", precio: 27500, img: "vento.png" },
+    { id: 4, nombre: "Volkswagen T-cross", precio: 32000, img: "t-cross.png" },
+    { id: 5, nombre: "Volkswagen Taos", precio: 30000, img: "taos.png" },
+    { id: 6, nombre: "Volkswagen Nivus", precio: 35000, img: "nivus.png" },
+    { id: 7, nombre: "Volkswagen Amarok", precio: 47000, img: "amarok.png" },
+    { id: 8, nombre: "Volkswagen Amarok V6", precio: 53000, img: "amarok-version-V6-Extreme-.png" },
 ];
 
 //SELECCIONAR LOS ELEMENTOS CON LOS QUE VAMOS A TRABAJAR:
