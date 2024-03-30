@@ -1,7 +1,8 @@
 // Llamar al formulario:
 const formRegistro = document.getElementById("form-registro");
+const contenedorForm = document.getElementById("cont-form");
 
-// Evento submit del formulario:
+// Primera escucha de evento submit del formulario para crear cuenta de usuario:
 formRegistro.addEventListener("submit", (evento) => {
     evento.preventDefault();
 
@@ -18,15 +19,16 @@ formRegistro.addEventListener("submit", (evento) => {
 
     // Si el usuario ya existe, mostrar un mensaje y salir de la función:
     if (usuarioExistente) {
-        alert("El correo electrónico ya está registrado. Por favor, utiliza otro.");
+        //Sweet alert:
+        Swal.fire(
+            "El correo electrónico ya está registrado. Por favor, utiliza otro."
+        );
         return;
     }
 
     // Crear nuevo usuario:
     const nuevoUsuario = new Usuario(nombre, correo, password);
-
-    // Agregar el nuevo usuario al array de usuarios:
-    usuarios.push(nuevoUsuario);
+    usuarios.push(nuevoUsuario); // Agregar el nuevo usuario al array de usuarios:
 
     // Guardar el array actualizado en el local storage:
     localStorage.setItem("usuarios", JSON.stringify(usuarios));

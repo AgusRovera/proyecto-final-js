@@ -1,32 +1,38 @@
-//array de productos:
-const tienda = [
-    {
-        id: 1,
-        nombre: "Volkswagen Polo",
-        precio: 23000 ,
-        img: "polo.png",
-    },
-    {
-        id: 2,
-        nombre: "Volkswagen Virtus",
-        precio: 19000,
-        img: "virtus.png",
-    },
-    { id: 3, nombre: "Volkswagen Vento", precio: 27500, img: "vento.png" },
-    { id: 4, nombre: "Volkswagen T-cross", precio: 32000, img: "t-cross.png" },
-    { id: 5, nombre: "Volkswagen Taos", precio: 30000, img: "taos.png" },
-    { id: 6, nombre: "Volkswagen Nivus", precio: 35000, img: "nivus.png" },
-    { id: 7, nombre: "Volkswagen Amarok", precio: 47000, img: "amarok.png" },
-    { id: 8, nombre: "Volkswagen Amarok V6", precio: 53000, img: "amarok-version-V6-Extreme-.png" },
-];
+//El array de productos fue convertido a formato json para consumirlo de forma asincrona:
+
+//Utilizamos async await.
+//declarar el array de productos'tienda' como variable global:
+let tienda;
+
+//Funcion para llamar al array 'tienda' de forma asincrona:
+const getData = async (url) => {
+    try {
+        const respuesta = await fetch(url);
+        const datos = await respuesta.json();
+        console.log(datos);
+        //desestructurar:
+        tienda = datos.tienda; //Se asigna el valor de datos.tienda a la variable global 'tienda'.
+
+        // Después de obtener los datos, llamar a crearHtml:
+        crearHtml(tienda);
+        //llamar a agregarEventos:
+
+        agregarEventos(tienda);
+    } catch (error) {
+        console.error("Error al obtener los datos:", error);
+    }
+};
+
+const API_URL = "../db/db.json";
+getData(API_URL);
 
 //SELECCIONAR LOS ELEMENTOS CON LOS QUE VAMOS A TRABAJAR:
 
 const inputIngreso = document.querySelector("#ingreso"); //input ingreso
 const btnSearch = document.querySelector("#btnSearch"); //boton buscar:
 const btnMostrar = document.querySelector("#btnMostrar"); //boton mostrar carrito
-const btnLimpiarCarrito = document.querySelector("#btnQuitar"); //boton limpiar carrito
-const btnPagar = document.querySelector("#btnPagar"); //boton pagar carrito
+const btnVaciarCarrito = document.querySelector("#btnQuitar"); //boton limpiar carrito
+const btnPagarCarrito = document.querySelector("#btnPagar"); //boton pagar carrito
 const contenedor = document.querySelector("#contenedor"); //<div> donde se almacenaran las tarjetas de forma dinamica.
 const contenedorPago = document.querySelector("#contenedor-pago"); //<div> donde se muestra el total a pagar por el carrito.
 //Se inicializa totalPagar en local storage con valor cero si aun no exiate. Y se llama dentro de la funcion quitarDelCarrito:
@@ -47,17 +53,52 @@ function filtrarProducto(arr, filtro) {
 
     return filtrado;
 }
+//FUNCION AGREGAR EVENTOS:
+//Evento click en los botones "Agregar" y "quitar" de las tarjetas de producto:
+function agregarEventos() {
+    const agregarBtns = document.querySelectorAll(".agregar-btn");
+    const quitarBtns = document.querySelectorAll(".quitar-btn");
+
+    agregarBtns.forEach((btn) => {
+        btn.addEventListener("click", agregarAlCarrito);
+        /* TOASTIFY*/
+        btn.addEventListener("click", (event) => {
+            const productoId = parseInt(event.target.getAttribute("data-id"));
+            const productoSeleccionado = tienda.find(
+                (producto) => producto.id === productoId
+            );
+
+            if (productoSeleccionado) {
+                Toastify({
+                    text: `${productoSeleccionado.nombre} se agregó al carrito!`,
+                    duration: 1500,
+                    gravity: "top",
+                    position: "center",
+                    stopOnFocus: true,
+                    style: {
+                    background: "#1f561f",
+                    },
+                }).showToast();
+            }
+        });
+    });
+
+    quitarBtns.forEach((btn) => {
+        btn.addEventListener("click", (event) => quitarDelCarrito(event, tienda));
+    });
+}
 
 //Funcion para agregar un producto al carrito:
 function agregarAlCarrito(event) {
     console.log("Agregando al carrito");
     const productoId = parseInt(event.target.getAttribute("data-id"));
+
     const productoSeleccionado = tienda.find(
         (producto) => producto.id === productoId
     );
 
     if (productoSeleccionado) {
-        //verificar si el servicio o producto ya esta en el carrito:
+        //verificar si el producto ya esta en el carrito:
         const existeEnCarrito = carrito.some((item) => item.id === productoId);
 
         if (existeEnCarrito) {
@@ -71,13 +112,18 @@ function agregarAlCarrito(event) {
             //si no esta en el carrito agregarlo con cantidad 1:
             carrito.push({ ...productoSeleccionado, cantidad: 1 });
         }
+
+        //Despues de agregar un producto al carrito, actualizar la variable totalPagar en el almacenamiento local:
+        const totalPagar = calcularPagoTotal(carrito);
+        localStorage.setItem("totalPagar", JSON.stringify(totalPagar));
+        //Actualizar contenido del contenedor de pago con el nuevo total:
+        contenedorPago.innerHTML = `<p>Total del carrito: $${totalPagar}.00</p>`;
         //guardar carrito actualizado en LS:
         localStorage.setItem("carrito", JSON.stringify(carrito));
-        //volver a renderizar las tarjetas de productos:
     }
 }
 
-//---FUNCION PARA QUITAR UN PRODUCTO DEL CARRITO:---
+//FUNCION PARA QUITAR UN PRODUCTO DEL CARRITO:
 function quitarDelCarrito(event) {
     const productoId = parseInt(event.target.getAttribute("data-id"));
     const indice = carrito.findIndex((item) => item.id === productoId);
@@ -100,82 +146,44 @@ function quitarDelCarrito(event) {
     }
 }
 
-//FUNCION AGREGAR EVENTOS:
-//Evento click en los botones "Agregar" y "quitar" de las tarjetas de producto:
-function agregarEventos() {
-    const agregarBtns = document.querySelectorAll(".agregar-btn");
-    const quitarBtns = document.querySelectorAll(".quitar-btn");
-
-    agregarBtns.forEach((btn) => {
-        btn.addEventListener("click", agregarAlCarrito);
-
-        /* TOASTIFY*/
-        btn.addEventListener("click", (event) => {
-            const productoId = parseInt(event.target.getAttribute("data-id"));
-            const productoSeleccionado = tienda.find(
-                (producto) => producto.id === productoId
-            );
-
-            if (productoSeleccionado) {
-                Toastify({
-                    text: `${productoSeleccionado.nombre} agregado al carrito`,
-                    duration: 2500,
-                    gravity: "top",
-                    position: "center",
-                    stopOnFocus: true,
-                    style: {
-                        background: "#1f561f",
-                    },
-                }).showToast();
-            }
-        });
-    });
-
-    quitarBtns.forEach((btn) => {
-        btn.addEventListener("click", quitarDelCarrito);
-    });
-}
-
-// Función para crear estructura html:
-//se declara mostrarBotonAgregar = true, pero cuando un producto se agrega al carrito, esto cambia a false para que la tarjeta de producto solo tenga el boton "quitar":
-function crearHtml(arr, mostrarBotonAgregar = true) {
+/*-----PRUEBA DE FUNCION PARA AJUSTAR BOTONES----- */
+function crearHtml(arr) {
     contenedor.innerHTML = "";
 
-    //La funcion se ejecuta solo si el array no esta vacio.
+    // La función se ejecuta solo si el array no está vacío.
     if (arr && arr.length > 0) {
-        //Desestructuracion del objeto en la funcion::
+        // Desestructuración del objeto en la función:
         for (const el of arr) {
             const { img, nombre, precio, id } = el;
+            const estaEnCarrito = carrito.some((item) => item.id === id);
+            //El precio del producto tendra 2 decimales:
             const html = `
         <div class="card">
-        <img src=" ../img/${img}" alt="${nombre}">
-        <hr>
-        <h3>${nombre}</h3>
-        <p>Precio: $${precio} </p>
-        <div class="card-action">
-        ${mostrarBotonAgregar
-                    ? `<button class="btn btn-success agregar-btn" data-id="${id}">Agregar</button>`
-                    : ""
-                }
-        ${
-                //si el producto se agrega al carrito, adquiere un boton 'quitar':
-                carrito.some((el) => el.id === id)
+          <img src="../img/${img}" alt="${nombre}">
+          <hr>
+          <h3>${nombre}</h3>
+          <p>Precio: $${precio.toFixed(2)} </p>
+          <div class="card-action">
+            ${estaEnCarrito
                     ? `<button class="btn btn-danger quitar-btn" data-id="${id}">Quitar</button>`
-                    : ""
-                }     
-        </div>
+                    : `<button class="btn btn-success agregar-btn" data-id="${id}">Agregar</button>`
+                }
+          </div>
         </div>`;
-            //Agregar al contenedor:
+
+            // Agregar tarjetas al contenedor:
             contenedor.innerHTML += html;
         }
-        agregarEventos(); //agrega eventos despues de crear todas las tarjetas HTML.
+        agregarEventos(); // Agrega eventos después de crear todas las tarjetas HTML.
     } else {
-        //si no hay productos agregados al array, la funcion muestra el sig. mensaje:
-        contenedor.innerHTML = "<p>Aun no has agregado productos al carrito</p>";
+        // Si no hay productos agregados al carrito, la función muestra el siguiente mensaje:
+        contenedorPago.innerHTML = "";
+        contenedor.innerHTML =
+            "No hay productos agregados al carrito.  Haz click en 'Buscar' para ver todos nuestros productos";
     }
 }
 
-crearHtml(tienda);
+//crearHtml(tienda);
 
 //Agregar una escucha de evento click al boton "buscar":
 btnSearch.addEventListener("click", () => {
@@ -192,7 +200,8 @@ btnSearch.addEventListener("click", () => {
     }
 });
 
-//boton "ver carrito" los productos agregados al carrito solo tienen el boton "quitar" y no se pueden agregar de nuevo dentro del carrito:
+//Boton "ver carrito".
+//Los productos agregados al carrito solo tienen el boton "quitar" y no se pueden agregar de nuevo dentro del carrito:
 btnMostrar.addEventListener("click", () => {
     const carritoDesdeLS = JSON.parse(localStorage.getItem("carrito"));
     crearHtml(carritoDesdeLS, false); //false
@@ -203,22 +212,39 @@ btnMostrar.addEventListener("click", () => {
     console.log(total);
 });
 
-//3.-Agregar una escucha de evento click al boton "limpiar carrito":
-btnLimpiarCarrito.addEventListener("click", () => {
-    contenedor.innerText = "Tu carrito esta limpio";
-    (contenedorPago.innerHTML = ""), localStorage.removeItem("carrito");
-}); //el carrito se borra del almacenamiento local
-//Funcion anterior para calcular el pago total:
-function calcularPagoTotal(array) {
-    return array.reduce((acc, elemento) => {
-        //Si elemento.cantidad no tiene un valor, asumir 1:
-        const cantidad = elemento.cantidad || 1;
-        return acc + elemento.precio * cantidad;
-    }, 0);
-}
+//Agregar una escucha de evento click al boton "vaciar carrito":
+btnVaciarCarrito.addEventListener("click", () => {
+    //Restablecer la variable totalPagar a cero en el almacenamiento local:
+    localStorage.setItem("totalPagar", JSON.stringify(0));
 
-// Evento click en el botón Pagar
-btnPagar.addEventListener("click", () => {
+    //Reiniciar el estado del carrito cuando se use el boton 'vaciar carrito':
+    carrito.length = 0;
+
+    Swal.fire("El carrito esta vacío! Agrega algún producto.");
+    //Limpiar el contenedor donde aparece el total a pagar:
+    contenedorPago.innerHTML = "";
+    //Remover el carrito del almacenamiento local:
+    localStorage.removeItem("carrito");
+
+    //mostrar las tarjetas de productos si el carrito esta vacio:
+    crearHtml(tienda);
+});
+
+//Funcion  para calcular el pago total:
+function calcularPagoTotal(array) {
+    //Hacer el calculo solo si el carrito tiene productos agregados:
+    if (array && array.length > 0) {
+        return array.reduce((acc, elemento) => {
+            //Si elemento.cantidad no tiene un valor, asumir 1:
+            const cantidad = elemento.cantidad || 1;
+            return acc + elemento.precio * cantidad;
+        }, 0);
+    } else {
+        return 0; //Devolver 0 si el carrito esta vacio.
+    }
+}
+// Evento click en el botón Pagar carrito:
+btnPagarCarrito.addEventListener("click", () => {
     const carritoDesdeLS = JSON.parse(localStorage.getItem("carrito"));
     //Verificar si el carrito esta vacio:
     if (!carritoDesdeLS || carritoDesdeLS.length === 0) {
@@ -226,11 +252,19 @@ btnPagar.addEventListener("click", () => {
         return;
     }
     const total = calcularPagoTotal(carritoDesdeLS);
-    (contenedorPago.innerHTML = ""), localStorage.removeItem("carrito");
+    //Limpiar el contenedor del total a pagar:
+    contenedorPago.innerHTML = "";
+    //Reiniciar el estado del carrito despues de pagar:
+    carrito.length = 0;
+    //Remover el carrito del almacenamiento local despues de pagar:
+    localStorage.removeItem("carrito");
+    //Despues de pagar, reiniciar la variable totalPagar a cero en el almacenamiento local:
+    localStorage.setItem("totalPagar", JSON.stringify(0));
 
     Swal.fire({
         title: "Compra exitosa",
         text: `Total pagado: $${total}`,
         icon: "success",
     });
+    crearHtml(tienda);
 });

@@ -1,0 +1,52 @@
+{
+    "tienda": [
+        {
+            "id": 1,
+            "nombre": "Volkswagen Polo",
+            "precio": 23000,
+            "img": "polo.png"
+        },
+        {
+            "id": 2,
+            "nombre": "Volkswagen Virtus",
+            "precio": 19000,
+            "img": "virtus.png"
+        },
+        {
+            "id": 3,
+            "nombre": "Volkswagen Vento",
+            "precio": 27500,
+            "img": "vento.png"
+        },
+        {
+            "id": 4,
+            "nombre": "Volkswagen T-cross",
+            "precio": 32000,
+            "img": "t-cross.png"
+        },
+        {
+            "id": 5,
+            "nombre": "Volkswagen Taos",
+            "precio": 30000,
+            "img": "taos.png"
+        },
+        {
+            "id": 6,
+            "nombre": "Volkswagen Nivus",
+            "precio": 35000,
+            "img": "nivus.png"
+        },
+        {
+            "id": 7,
+            "nombre": "Volkswagen Amarok",
+            "precio": 47000,
+            "img": "amarok.png"
+        },
+        {
+            "id": 8,
+            "nombre": "Volkswagen Amarok V6",
+            "precio": 53000,
+            "img": "amarok-version-V6-Extreme-.png"
+        }
+    ]
+}
